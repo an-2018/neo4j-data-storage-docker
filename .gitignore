@@ -1,0 +1,5 @@
+data/
+dbms/
+plugins/
+logs/
+.env

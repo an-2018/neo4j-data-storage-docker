@@ -1,0 +1,31 @@
+version: "3.2"
+services:
+  neo4j:
+    image: neo4j:latest
+    container_name: "devneo4j"
+    volumes:
+      - ./plugins:/plugins
+      - ./data:/data
+      - ./import:/var/lib/neo4j/import
+      - ./logs:/logs
+      - ./conf:/conf
+    ports:
+      - 7474:7474
+      - 7687:7687
+    restart: on-failure
+    networks:
+      - neo4j_go_net
+    command: neo4j
+    environment:
+      NEO4J_AUTH: neo4j/password
+      NEO4J_dbms_security_procedures_unrestricted: "apoc.*,n10s.*"
+      NEO4J_apoc_export_file_enabled: "true"
+      NEO4J_apoc_import_file_enabled: "true"
+      NEO4J_apoc_import_file_use__neo4j__config: "true"
+
+networks:
+  neo4j_go_net:
+    driver: bridge
+
+volumes:
+  dgraph:
